@@ -61,7 +61,7 @@ class WebkitRenderer(QObject):
         self.scaleRatio = kwargs.get('scaleRatio', 'keep')
         self.format = kwargs.get('format', 'png')
         self.logger = kwargs.get('logger', None)
-        
+
         # Set this to true if you want to capture flash.
         # Not that your desktop must be large enough for
         # fitting the whole window.
@@ -130,7 +130,7 @@ class CookieJar(QNetworkCookieJar):
 
 	def allCookies(self):
 		return QNetworkCookieJar.allCookies(self)
-	
+
 	def setAllCookies(self, cookieList):
 		QNetworkCookieJar.setAllCookies(self, cookieList)
 
@@ -280,8 +280,13 @@ class _WebkitRendererHelper(QObject):
         else:
             qtUrl = QUrl(url)
 
+        if self.cookiesPath:
+            cookiesUrl = QUrl(self.cookiesPath)
+        else:
+            cookiesUrl = qtUrl
+
         # Set the required cookies, if any
-        self.cookieJar = CookieJar(self.cookies, qtUrl)
+        self.cookieJar = CookieJar(self.cookies, cookiesUrl)
         self._page.networkAccessManager().setCookieJar(self.cookieJar)
 
         # Load the page
