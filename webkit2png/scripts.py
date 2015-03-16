@@ -105,6 +105,8 @@ def main():
                       help="Enable additional Webkit features ('javascript', 'plugins')", metavar="FEATURE")
     parser.add_option("-c", "--cookie", dest="cookies", action="append",
                       help="Add this cookie. Use multiple times for more cookies. Specification is value of a Set-Cookie HTTP response header.", metavar="COOKIE")
+    parser.add_option("", "--cookiepath", dest="cookiesPath",
+                      help="Cookie Path", metavar="COOKIEPATH")
     parser.add_option("-w", "--wait", dest="wait", default=0, type="int",
                       help="Time to wait after loading before the screenshot is taken [default: %default]", metavar="SECONDS")
     parser.add_option("-t", "--timeout", dest="timeout", default=0, type="int",
@@ -188,6 +190,8 @@ def main():
             renderer.encodedUrl = options.encoded_url
             if options.cookies:
                 renderer.cookies = options.cookies
+            if options.cookiesPath:
+                renderer.cookiesPath = options.cookiesPath
 
             if options.scale:
                 renderer.scaleRatio = options.ratio
